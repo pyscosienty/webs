@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Kamu Sayang ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animasi Hujan */
+        .rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .drop {
+            position: absolute;
+            bottom: 100%;
+            width: 2px;
+            height: 50px;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.4));
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* Animasi Ombak Pantai */
+        .waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(135, 206, 250, 0.3)"/></svg>') repeat-x;
+            animation: wave 15s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 10px;
+            opacity: 0.5;
+            animation: wave 20s linear infinite reverse;
+        }
+
+        .wave:nth-child(3) {
+            bottom: 20px;
+            opacity: 0.3;
+            animation: wave 25s linear infinite;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 3;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 3em;
+            text-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .subtitle {
+            color: #ffb6c1;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(255, 182, 193, 1), 0 0 40px rgba(255, 182, 193, 0.8);
+            }
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding-bottom: 100px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 182, 193, 0.3);
+        }
+
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(255, 182, 193, 0.4);
+        }
+
+        .image-container {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.15) rotate(3deg);
+        }
+
+        .placeholder {
+            color: white;
+            font-size: 3em;
+            text-align: center;
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(255, 105, 180, 0.9), transparent);
+            padding: 25px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover .overlay {
+            transform: translateY(0);
+        }
+
+        .overlay h3 {
+            color: white;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay p {
+            color: #fff;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .heart {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #ff69b4;
+            font-size: 1.5em;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Message Box */
+        .love-message {
+            text-align: center;
+            background: rgba(255, 182, 193, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 182, 193, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            color: white;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .love-message p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animasi Hujan -->
+    <div class="rain" id="rain"></div>
+
+    <!-- Animasi Ombak -->
+    <div class="waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>💕 Galeri Kita Sayang 💕</h1>
+            <p class="subtitle">Setiap momen bersamamu adalah kenangan terindah</p>
+        </div>
+
+        <div class="gallery">
+            <div class="gallery-item">
+                <div class="image-container">
+                    <span class="placeholder">📷</span>
+                </div>
+                <span class="heart">❤️</span>
+                <div class="overlay">
+                    <h3>Kenangan Pertama</h3>
+                    <p>Momen saat pertama kali bertemu denganmu</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-container">
+                    <span class="placeholder">🌅</span>
+                </div>
+                <span class="heart">❤️</span>
+                <div class="overlay">
+                    <h3>Sunset Bersama</h3>
+                    <p>Matahari terbenam lebih indah bersamamu</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-container">
+                    <span class="placeholder">🏖️</span>
+                </div>
+                <span class="heart">❤️</span>
+                <div class="overlay">
+                    <h3>Pantai Romantis</h3>
+                    <p>Jejak kaki kita di pasir pantai</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-container">
+                    <span class="placeholder">🌸</span>
+                </div>
+                <span class="heart">❤️</span>
+                <div class="overlay">
+                    <h3>Taman Bunga</h3>
+                    <p>Cantiknya bunga tak seindah senyumanmu</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-container">
+                    <span class="placeholder">☕</span>
+                </div>
+                <span class="heart">❤️</span>
+                <div class="overlay">
+                    <h3>Coffee Date</h3>
+                    <p>Ngopi bareng sambil ngobrol berjam-jam</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-container">
+                    <span class="placeholder">🌟</span>
+                </div>
+                <span class="heart">❤️</span>
+                <div class="overlay">
+                    <h3>Bintang Malam</h3>
+                    <p>Menatap bintang sambil bergandengan tangan</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="love-message">
+            <p>
+                "Di setiap foto, di setiap momen, ada cinta yang tulus untukmu. 
+                Terima kasih sudah menjadi bagian terbaik dalam hidupku. 
+                Aku sayang kamu, selamanya dan seterusnya. 💖"
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Membuat efek hujan
+        function createRain() {
+            const rainContainer = document.getElementById('rain');
+            const numberOfDrops = 150;
+
+            for (let i = 0; i < numberOfDrops; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'drop';
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
+                drop.style.animationDelay = Math.random() * 2 + 's';
+                drop.style.opacity = Math.random() * 0.5 + 0.3;
+                rainContainer.appendChild(drop);
+            }
+        }
+
+        // Inisialisasi hujan saat halaman dimuat
+        window.addEventListener('load', createRain);
+
+        // Menambahkan efek klik pada gallery items
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>

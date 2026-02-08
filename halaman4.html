@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenangan Indah - Cerita Kita</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating Hearts Background */
+        .heart-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 20px;
+            animation: floatHeart 15s linear infinite;
+        }
+        
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 56px;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .header .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 30px rgba(255,255,255,0.3);
+            }
+            to {
+                text-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 50px rgba(255,255,255,0.6);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Memory Cards */
+        .memory-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: slideInUp 0.8s ease-out forwards;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            position: relative;
+        }
+        
+        .memory-card:nth-child(1) { animation-delay: 0.2s; }
+        .memory-card:nth-child(2) { animation-delay: 0.4s; }
+        .memory-card:nth-child(3) { animation-delay: 0.6s; }
+        .memory-card:nth-child(4) { animation-delay: 0.8s; }
+        .memory-card:nth-child(5) { animation-delay: 1s; }
+        .memory-card:nth-child(6) { animation-delay: 1.2s; }
+        
+        .memory-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.4);
+        }
+        
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s;
+        }
+        
+        .memory-card:hover::before {
+            left: 100%;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(80px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 350px;
+        }
+        
+        .memory-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        
+        .memory-card:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .memory-card:hover .image-overlay {
+            opacity: 1;
+        }
+        
+        .memory-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 40px;
+            opacity: 0;
+            transform: rotate(-45deg) scale(0);
+            transition: all 0.5s ease;
+        }
+        
+        .memory-card:hover .memory-icon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+        
+        .memory-content {
+            padding: 40px;
+            position: relative;
+        }
+        
+        .memory-content h2 {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-size: 32px;
+            animation: fadeInLeft 0.8s ease-out;
+        }
+        
+        .memory-content p {
+            color: #555;
+            line-height: 2;
+            font-size: 16px;
+            text-align: justify;
+            animation: fadeInLeft 0.8s ease-out 0.2s backwards;
+        }
+        
+        .memory-date {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 15px;
+            animation: fadeInLeft 0.8s ease-out 0.4s backwards;
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Quote Section */
+        .quote-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            margin-top: 60px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease-out 1.5s backwards;
+        }
+        
+        .quote-section blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: #764ba2;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .quote-section cite {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            color: #667eea;
+            font-style: normal;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 30px;
+            font-size: 16px;
+            animation: fadeIn 1s ease-out 2s backwards;
+        }
+        
+        .footer-heart {
+            display: inline-block;
+            color: #ff6b9d;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            font-size: 24px;
+            margin: 0 10px;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 40px;
+            }
+            
+            .memory-content {
+                padding: 30px 25px;
+            }
+            
+            .memory-content h2 {
+                font-size: 26px;
+            }
+            
+            .image-wrapper {
+                height: 250px;
+            }
+            
+            .quote-section blockquote {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="heart-container" id="heartContainer"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>✨ Kenangan Indah ✨</h1>
+            <p class="subtitle">Cerita Cinta yang Tak Terlupakan</p>
+        </div>
+        
+        <!-- Memory Card 1 -->
+        <div class="memory-card">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&h=400&fit=crop" alt="Momen Pertama">
+                <div class="image-overlay"></div>
+                <div class="memory-icon">💫</div>
+            </div>
+            <div class="memory-content">
+                <h2>Momen Pertama Kita Bertemu</h2>
+                <p>awal ketemu di map vidi wakakak terus sayang manggil akk waria ga expect juga kita bakal sejauh ini sayang lopyuu banyak banyak pokona jangan tinggalin akk ya sayang, akk sayang banget sama sayang.</p>
+                <span class="memory-date">📅 Awal dari Segalanya</span>
+            </div>
+        </div>
+        
+        <!-- Memory Card 2 -->
+        <div class="memory-card">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&h=400&fit=crop" alt="Tawa Bersama">
+                <div class="image-overlay"></div>
+                <div class="memory-icon">😊</div>
+            </div>
+            <div class="memory-content">
+                <h2>Tawa dan Kebahagiaan Kita</h2>
+                <p>Dalam setiap tawa yang kita bagikan, ada kebahagiaan yang tak tergantikan. Kamu mengajarkanku arti kebahagiaan sejati—bukan dari hal-hal besar, tapi dari momen-momen sederhana bersama. Setiap canda tawa kita adalah bukti bahwa kebahagiaan terbesar adalah ketika kita bersama.</p>
+                <span class="memory-date">🎭 Kebahagiaan Tanpa Batas</span>
+            </div>
+        </div>
+        
+        <!-- Memory Card 3 -->
+        <div class="memory-card">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&h=400&fit=crop" alt="Petualangan Bersama">
+                <div class="image-overlay"></div>
+                <div class="memory-icon">🌍</div>
+            </div>
+            <div class="memory-content">
+                <h2>Petualangan yang Tak Terlupakan</h2>
+                <p>Setiap perjalanan bersama adalah petualangan baru yang memperkaya jiwa. Dari matahari terbit hingga terbenam, setiap langkah yang kita lalui bersama menciptakan cerita yang indah. Bukan tentang seberapa jauh kita melangkah, tapi tentang siapa yang menemani kita di setiap langkah itu.</p>
+                <span class="memory-date">🗺️ Jejak Langkah Kita</span>
+            </div>
+        </div>
+        
+        <!-- Memory Card 4 -->
+        <div class="memory-card">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=800&h=400&fit=crop" alt="Dukungan">
+                <div class="image-overlay"></div>
+                <div class="memory-icon">🤝</div>
+            </div>
+            <div class="memory-content">
+                <h2>Dalam Suka dan Duka</h2>
+                <p>Kamu ada di saat suka, merayakan setiap keberhasilan dengan tulus. Kamu juga ada di saat duka, memberikan pelukan hangat ketika dunia terasa berat. Terima kasih telah menjadi tempat pulang yang selalu aman, tempat di mana aku bisa menjadi diriku yang sebenarnya tanpa takut dihakimi.</p>
+                <span class="memory-date">💪 Kekuatan Kita Berdua</span>
+            </div>
+        </div>
+        
+        <!-- Memory Card 5 -->
+        <div class="memory-card">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=800&h=400&fit=crop" alt="Cinta Sejati">
+                <div class="image-overlay"></div>
+                <div class="memory-icon">💖</div>
+            </div>
+            <div class="memory-content">
+                <h2>Cinta yang Tulus dan Abadi</h2>
+                <p>Cinta sejati bukan hanya tentang kata-kata manis, tapi tentang kehadiran yang konsisten. Tentang memilih untuk tetap bersama di setiap musim kehidupan. Cintaku padamu tumbuh setiap hari, semakin dalam, semakin kuat. Kamu adalah rumah yang selalu ingin aku pulang, hari demi hari.</p>
+                <span class="memory-date">❤️ Selamanya dan Seterusnya</span>
+            </div>
+        </div>
+        
+        <!-- Memory Card 6 -->
+        <div class="memory-card">
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1502139214982-d0ad755818d8?w=800&h=400&fit=crop" alt="Masa Depan">
+                <div class="image-overlay"></div>
+                <div class="memory-icon">🌟</div>
+            </div>
+            <div class="memory-content">
+                <h2>Masa Depan yang Kita Impikan</h2>
+                <p>Masa lalu kita indah, masa kini kita bahagia, dan masa depan kita penuh harapan. Bersama denganmu, aku tidak takut menghadapi apa pun yang akan datang. Karena aku tahu, apapun yang terjadi, kita akan menghadapinya bersama. Terima kasih telah menjadi alasan untuk terus bermimpi dan berharap.</p>
+                <span class="memory-date">🌈 Menuju Hari Esok</span>
+            </div>
+        </div>
+        
+        <!-- Quote Section -->
+        <div class="quote-section">
+            <blockquote>
+                "Kenangan indah bersama adalah harta paling berharga yang tidak akan pernah bisa dicuri oleh waktu. Setiap detik bersamamu adalah hadiah yang kusyukuri setiap hari."
+            </blockquote>
+            <cite>— Dari Hati yang Terdalam</cite>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Dibuat dengan <span class="footer-heart">❤️</span> untuk Kenangan Kita yang Tak Terlupakan</p>
+            <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">Setiap momen bersamamu adalah cerita yang ingin terus kutulis</p>
+        </div>
+    </div>
+    
+    <script>
+        // Generate floating hearts
+        const heartContainer = document.getElementById('heartContainer');
+        const heartSymbols = ['❤️', '💕', '💖', '💗', '💓', '💝'];
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heartContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 20000);
+        }
+        
+        // Create hearts periodically
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createHeart, i * 1000);
+        }
+        
+        setInterval(() => {
+            createHeart();
+        }, 2000);
+        
+        // Add scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.memory-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

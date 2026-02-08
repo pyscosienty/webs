@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Foto Animasi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animasi Awan */
+        .clouds {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+            opacity: 0.8;
+            animation: float linear infinite;
+        }
+        
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+        }
+        
+        .cloud1 {
+            width: 100px;
+            height: 40px;
+            top: 10%;
+            left: -100px;
+            animation-duration: 25s;
+        }
+        
+        .cloud1::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 10px;
+        }
+        
+        .cloud1::after {
+            width: 60px;
+            height: 40px;
+            top: -15px;
+            right: 10px;
+        }
+        
+        .cloud2 {
+            width: 120px;
+            height: 45px;
+            top: 20%;
+            left: -150px;
+            animation-duration: 30s;
+            animation-delay: 5s;
+        }
+        
+        .cloud2::before {
+            width: 60px;
+            height: 60px;
+            top: -30px;
+            left: 15px;
+        }
+        
+        .cloud2::after {
+            width: 70px;
+            height: 45px;
+            top: -20px;
+            right: 15px;
+        }
+        
+        .cloud3 {
+            width: 90px;
+            height: 35px;
+            top: 40%;
+            left: -120px;
+            animation-duration: 28s;
+            animation-delay: 10s;
+        }
+        
+        .cloud3::before {
+            width: 45px;
+            height: 45px;
+            top: -20px;
+            left: 10px;
+        }
+        
+        .cloud3::after {
+            width: 55px;
+            height: 35px;
+            top: -15px;
+            right: 10px;
+        }
+        
+        .cloud4 {
+            width: 110px;
+            height: 42px;
+            top: 60%;
+            left: -130px;
+            animation-duration: 32s;
+            animation-delay: 15s;
+        }
+        
+        .cloud4::before {
+            width: 55px;
+            height: 55px;
+            top: -28px;
+            left: 12px;
+        }
+        
+        .cloud4::after {
+            width: 65px;
+            height: 42px;
+            top: -18px;
+            right: 12px;
+        }
+        
+        .cloud5 {
+            width: 95px;
+            height: 38px;
+            top: 15%;
+            left: -110px;
+            animation-duration: 27s;
+            animation-delay: 20s;
+        }
+        
+        .cloud5::before {
+            width: 48px;
+            height: 48px;
+            top: -22px;
+            left: 11px;
+        }
+        
+        .cloud5::after {
+            width: 58px;
+            height: 38px;
+            top: -16px;
+            right: 11px;
+        }
+        
+        @keyframes float {
+            to {
+                left: 110%;
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: titleBounce 1s ease-out;
+        }
+        
+        @keyframes titleBounce {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1) rotate(10deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 50px;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.8s ease-out backwards;
+            background: white;
+        }
+        
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+        .gallery-item:nth-child(7) { animation-delay: 0.7s; }
+        .gallery-item:nth-child(8) { animation-delay: 0.8s; }
+        .gallery-item:nth-child(9) { animation-delay: 0.9s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.05) rotate(2deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-overlay h3 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+            animation: slideInRight 0.5s ease-out;
+        }
+        
+        .gallery-overlay p {
+            font-size: 0.9em;
+            opacity: 0.9;
+            animation: slideInRight 0.5s ease-out 0.1s backwards;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Badge kategori */
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            animation: bounceIn 0.6s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Modal Lightbox */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: 50px auto;
+            max-width: 90%;
+            max-height: 90vh;
+            animation: zoomIn 0.4s ease;
+        }
+        
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .close:hover {
+            transform: rotate(90deg) scale(1.2);
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: rise linear infinite;
+        }
+        
+        @keyframes rise {
+            to {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+        
+        .particle:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            left: 10%;
+            animation-duration: 8s;
+            animation-delay: 0s;
+        }
+        
+        .particle:nth-child(2) {
+            width: 6px;
+            height: 6px;
+            left: 30%;
+            animation-duration: 10s;
+            animation-delay: 2s;
+        }
+        
+        .particle:nth-child(3) {
+            width: 10px;
+            height: 10px;
+            left: 50%;
+            animation-duration: 12s;
+            animation-delay: 4s;
+        }
+        
+        .particle:nth-child(4) {
+            width: 7px;
+            height: 7px;
+            left: 70%;
+            animation-duration: 9s;
+            animation-delay: 1s;
+        }
+        
+        .particle:nth-child(5) {
+            width: 9px;
+            height: 9px;
+            left: 90%;
+            animation-duration: 11s;
+            animation-delay: 3s;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            
+            .gallery-item img {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animasi Awan -->
+    <div class="clouds">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+        <div class="cloud cloud4"></div>
+        <div class="cloud cloud5"></div>
+    </div>
+    
+    <!-- Floating Particles -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    
+    <div class="container">
+        <h1>✨ Galeri Foto Premium ✨</h1>
+        <p class="subtitle">Koleksi Gambar Memukau dengan Animasi Interaktif</p>
+        
+        <div class="gallery">
+            <div class="gallery-item" onclick="openModal(this)">
+                <span class="category-badge">Alam</span>
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500" alt="Pemandangan Gunung">
+                <div class="gallery-overlay">
+                    <h3>Pemandangan Gunung</h3>
+                    <p>Keindahan alam pegunungan yang menakjubkan</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" onclick="openModal(this)">
+                <span class="category-badge">Pantai</span>
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500" alt="Pantai Tropis">
+                <div class="gallery-overlay">
+                    <h3>Pantai Tropis</h3>
+                    <p>Pesona pantai dengan air jernih dan pasir putih</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" onclick="openModal(this)">
+                <span class="category-badge">Kota</span>
+                <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=500" alt="Kota Malam">
+                <div class="gallery-overlay">
+                    <h3>Kota Malam</h3>
+                    <p>Gemerlap lampu kota di malam hari</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" onclick="openModal(this)">
+                <span class="category-badge">Hutan</span>
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500" alt="Hutan Hijau">
+                <div class="gallery-overlay">
+                    <h3>Hutan Hijau</h3>
+                    <p>Kehijauan alami hutan tropis</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" onclick="openModal(this)">
+                <span class="category-badge">Sunset</span>
+                <img src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=500" alt="Matahari Terbenam">
+                <div class="gallery-overlay">
+                    <h3>Matahari Terbenam</h3>
+                    <p>Keindahan langit senja yang memukau</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" onclick="openModal(this)">
+                <span class="category-badge">Danau</span>
+                <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=500" alt="Danau Tenang">
+                <div class="gallery-overlay">
+                    <h3>Danau Tenang</h3>
+                    <p>Refleksi sempurna di permukaan danau</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" onclick="openModal(this)">
+                <span class="category-badge">Bunga</span>
+                <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500" alt="Taman Bunga">
+                <div class="gallery-overlay">
+                    <h3>Taman Bunga</h3>
+                    <p>Warna-warni bunga yang indah</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" onclick="openModal(this)">
+                <span class="category-badge">Langit</span>
+                <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=500" alt="Bintang Malam">
+                <div class="gallery-overlay">
+                    <h3>Bintang Malam</h3>
+                    <p>Keajaiban langit malam berbintang</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" onclick="openModal(this)">
+                <span class="category-badge">Air Terjun</span>
+                <img src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=500" alt="Air Terjun">
+                <div class="gallery-overlay">
+                    <h3>Air Terjun</h3>
+                    <p>Derasnya air terjun yang menyegarkan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Lightbox -->
+    <div id="myModal" class="modal" onclick="closeModal()">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="modalImg">
+        </div>
+    </div>
+    
+    <script>
+        function openModal(element) {
+            const modal = document.getElementById('myModal');
+            const modalImg = document.getElementById('modalImg');
+            const img = element.querySelector('img');
+            
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+        }
+        
+        // Tutup modal dengan tombol ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        // Animasi parallax untuk awan
+        document.addEventListener('mousemove', function(e) {
+            const clouds = document.querySelectorAll('.cloud');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            clouds.forEach((cloud, index) => {
+                const speed = (index + 1) * 0.5;
+                cloud.style.transform = `translate(${x * speed * 10}px, ${y * speed * 10}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
